@@ -98,6 +98,10 @@ class GUI:
 
     def add_person(self):
         """Add a new person to the collection"""
+        if len(self.name_entry.get().strip()) == 0:
+            messagebox.showerror(title="Name", message=f"Invalid name: {self.name_entry.get()}\nName must contain at least 1 character.")
+            self.name_entry.focus_set()
+            return
         try:
             age = int(self.age_entry.get())
             if age < 0: # Age was negative
@@ -109,7 +113,7 @@ class GUI:
             self.age_entry.focus_set()
             return
         # All entries valid, add person to collection, clear all entries
-        self.people.append(Person(self.name_entry.get(), self.age_entry.get(), self.mobile_var.get()))
+        self.people.append(Person(self.name_entry.get().strip(), self.age_entry.get(), self.mobile_var.get()))
         self.name_entry.delete(0, END)
         self.age_entry.delete(0, END)
         self.mobile_var.set(0)
